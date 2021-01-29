@@ -7,8 +7,6 @@ namespace GUI
 {
     public partial class Main : Form
     {
-        private readonly string _Startup_Path = Application.StartupPath + "\\Temp";
-
         public Main()
         {
             InitializeComponent();
@@ -51,8 +49,10 @@ namespace GUI
                 _Save_File_Dialog.Filter = "Executable (*.exe)|*.exe";
                 _Save_File_Dialog.ShowDialog();
 
-                Directory.CreateDirectory(_Startup_Path);
+                string _Startup_Path = Application.StartupPath + "\\Temp";
                 string _Files = "";
+
+                Directory.CreateDirectory(_Startup_Path);
 
                 for (int i = 0x0; i < listView1.Items.Count; i++)
                 {
